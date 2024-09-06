@@ -40,10 +40,10 @@ function Install-scanner {
         [string]$DownloadPath = $InstallPath,
 
         [Parameter(Mandatory = $False, Position = 2)]
-        [string]$RepoOwner = "redcanaryco",
+        [string]$RepoOwner = "SVD-RGB",
 
         [Parameter(Mandatory = $False, Position = 3)]
-        [string]$Branch = "master",
+        [string]$Branch = "main",
 
         [Parameter(Mandatory = $False, Position = 4)]
         [switch]$getAtomics = $False,
@@ -72,7 +72,7 @@ function Install-scanner {
             }
             if (-not (Test-Path $InstallPath)) { New-Item -ItemType directory -Path $InstallPath | Out-Null }
 
-            $url = "https://github.com/$RepoOwner/invoke-atomicredteam/archive/$Branch.zip"
+            $url = "https://github.com/$RepoOwner/Scanner/archive/$Branch.zip"
             $path = Join-Path $DownloadPath "$Branch.zip"
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
             write-verbose "Beginning download from Github"
@@ -81,7 +81,7 @@ function Install-scanner {
             write-verbose "Extracting ART to $InstallPath"
             $zipDest = Join-Path "$DownloadPath" "tmp"
             Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath $path -DestinationPath "$zipDest" -Force:$Force
-            $iartFolderUnzipped = Join-Path $zipDest "invoke-atomicredteam-$Branch"
+            $iartFolderUnzipped = Join-Path $zipDest "scanner-$Branch"
             Move-Item $iartFolderUnzipped $InstallPathwIart
             Remove-Item $zipDest -Recurse -Force
             Remove-Item $path
