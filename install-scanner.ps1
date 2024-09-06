@@ -46,7 +46,7 @@ function Install-scanner {
         [string]$Branch = "main",
 
         [Parameter(Mandatory = $False, Position = 4)]
-        [switch]$getAtomics = $False,
+        [switch]$getAtomics = $True,
 
         [Parameter(Mandatory = $False)]
         [switch]$Force = $False, # delete the existing install directory and reinstall
