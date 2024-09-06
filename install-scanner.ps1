@@ -55,8 +55,8 @@ function Install-scanner {
     Try {
         (New-Object System.Net.WebClient).Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
 
-        $InstallPathwIart = Join-Path $InstallPath "invoke-atomicredteam"
-        $modulePath = Join-Path "$InstallPath" "invoke-atomicredteam\Invoke-AtomicRedTeam.psd1"
+        $InstallPathwIart = Join-Path $InstallPath "invoke-scanner"
+        $modulePath = Join-Path "$InstallPath" "invoke-scanner\Invoke-scanner.psd1"
         if ($Force -or -Not (Test-Path -Path $InstallPathwIart )) {
             write-verbose "Directory Creation"
             if ($Force) {
@@ -89,7 +89,7 @@ function Install-scanner {
                 Install-Module -Name powershell-yaml -Scope CurrentUser -Force
             }
 
-            write-verbose "Importing invoke-atomicRedTeam module"
+            write-verbose "Importing invoke-scanner module"
             Import-Module $modulePath -Force
 
             if ($getAtomics) {
