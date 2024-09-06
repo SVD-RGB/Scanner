@@ -96,7 +96,7 @@ function Install-scanner {
 
             if ($getAtomics) {
                 Write-Verbose "Installing Atomics Folder"
-                Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicsfolder.ps1"); Install-AtomicsFolder -InstallPath $InstallPath 
+                Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/SVD-RGB/Scanner/main/install-atomicsfolder.ps1"); Install-AtomicsFolder -InstallPath $InstallPath 
             }
 
             Write-Host "Installation of scanner is complete. You can now use the Invoke-AtomicTest function" -Fore Yellow
