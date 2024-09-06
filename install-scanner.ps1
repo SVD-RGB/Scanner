@@ -1,12 +1,9 @@
 #Requires -Version 5.0
-function Install-AtomicRedTeam {
+function Install-scanner {
 
     <#
-    .SYNOPSIS
 
-        This is a simple script to download and install the Atomic Red Team Invoke-AtomicRedTeam Powershell Framework.
-
-        Atomic Function: Install-AtomicRedTeam
+        Atomic Function: Install-scanner
         Author: Red Canary Research
         License: MIT License
         Required Dependencies: powershell-yaml
@@ -14,11 +11,11 @@ function Install-AtomicRedTeam {
 
     .PARAMETER DownloadPath
 
-        Specifies the desired path to download Atomic Red Team.
+        Specifies the desired path to scanner.
 
     .PARAMETER InstallPath
 
-        Specifies the desired path for where to install Atomic Red Team.
+        Specifies the desired path for where to install scanner.
 
     .PARAMETER Force
 
@@ -26,8 +23,8 @@ function Install-AtomicRedTeam {
 
     .EXAMPLE
 
-        Install Atomic Red Team
-        PS> Install-AtomicRedTeam.ps1
+        Install scanner
+        PS> Install-scanner.ps1
 
     .NOTES
 
@@ -37,7 +34,7 @@ function Install-AtomicRedTeam {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $False, Position = 0)]
-        [string]$InstallPath = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/AtomicRedTeam" } else { $env:HOMEDRIVE + "\AtomicRedTeam" }),
+        [string]$InstallPath = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/scanner" } else { $env:HOMEDRIVE + "\scanner" }),
 
         [Parameter(Mandatory = $False, Position = 1)]
         [string]$DownloadPath = $InstallPath,
