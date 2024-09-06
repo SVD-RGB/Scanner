@@ -99,17 +99,17 @@ function Install-scanner {
                 Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/$RepoOwner/invoke-atomicredteam/$Branch/install-atomicsfolder.ps1"); Install-AtomicsFolder -InstallPath $InstallPath -DownloadPath $DownloadPath -Force:$Force -RepoOwner $RepoOwner -NoPayloads:$NoPayloads
             }
 
-            Write-Host "Installation of Invoke-AtomicRedTeam is complete. You can now use the Invoke-AtomicTest function" -Fore Yellow
+            Write-Host "Installation of scanner is complete. You can now use the Invoke-AtomicTest function" -Fore Yellow
             Write-Host "See Wiki at https://github.com/$repoOwner/invoke-atomicredteam/wiki for complete details" -Fore Yellow
         }
         else {
-            Write-Host -ForegroundColor Yellow "Atomic Redteam already exists at $InstallPathwIart. No changes were made."
+            Write-Host -ForegroundColor Yellow "scanner already exists at $InstallPathwIart. No changes were made."
             Write-Host -ForegroundColor Cyan "Try the install again with the '-Force' parameter if you want to delete the existing installion and re-install."
             Write-Host -ForegroundColor Red "Warning: All files within the install directory ($InstallPathwIart) will be deleted when using the '-Force' parameter."
         }
     }
     Catch {
-        Write-Error "Installation of AtomicRedTeam Failed."
+        Write-Error "Installation of scanner Failed."
         Write-Host $_.Exception.Message`n
     }
 }
