@@ -4,8 +4,6 @@ function Install-scanner {
     <#
 
         Atomic Function: Install-scanner
-        Author: Red Canary Research
-        License: MIT License
         Required Dependencies: powershell-yaml
         Optional Dependencies: None
 
@@ -100,7 +98,6 @@ function Install-scanner {
             }
 
             Write-Host "Installation of scanner is complete. You can now use the Invoke-AtomicTest function" -Fore Yellow
-            Write-Host "See Wiki at https://github.com/$repoOwner/invoke-atomicredteam/wiki for complete details" -Fore Yellow
         }
         else {
             Write-Host -ForegroundColor Yellow "scanner already exists at $InstallPathwIart. No changes were made."
