@@ -21,10 +21,6 @@ function Install-AtomicsFolder {
 
         Delete the existing atomics folder before installation if it exists.
 
-    .EXAMPLE
-
-        Install atomics folder
-        PS> Install-AtomicsFolder.ps1
 
     .NOTES
 
@@ -133,13 +129,13 @@ function Install-AtomicsFolder {
             $global:ProgressPreference = $ProgressPreference_backup
         }
         else {
-            Write-Host -ForegroundColor Yellow "An atomics folder already exists at $InstallPathwAtomics. No changes were made."
+            Write-Host -ForegroundColor Yellow "A folder already exists at $InstallPathwAtomics. No changes were made."
             Write-Host -ForegroundColor Cyan "Try the install again with the '-Force' parameter if you want to delete the existing installion and re-install."
             Write-Host -ForegroundColor Red "Warning: All files within the atomics folder ($InstallPathwAtomics) will be deleted when using the '-Force' parameter."
         }
     }
     Catch {
-        Write-Error "Installation of the AtomicsFolder Failed."
+        Write-Error "Installation of the TestsFolder Failed."
         Write-Host $_.Exception.Message`n
     }
 }
