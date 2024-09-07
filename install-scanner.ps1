@@ -94,7 +94,7 @@ function Install-scanner {
 
             if ($getTests) {
                 Write-Verbose "Installing Tests Folder"
-                Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/SVD-RGB/Scanner/main/install-atomicsfolder.ps1"); Install-AtomicsFolder -InstallPath $InstallPath 
+                Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/SVD-RGB/Scanner/main/install-testsfolder.ps1"); Install-AtomicsFolder -InstallPath $InstallPath 
             }
 
             Write-Host "Installation of scanner is complete. You can now use the Invoke-scannerTest function" -Fore Yellow
