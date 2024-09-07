@@ -3,7 +3,7 @@ function Install-scanner {
 
     <#
 
-        Atomic Function: Install-scanner
+        Function: Install-scanner
         Required Dependencies: powershell-yaml
         Optional Dependencies: None
 
@@ -44,13 +44,13 @@ function Install-scanner {
         [string]$Branch = "main",
 
         [Parameter(Mandatory = $False, Position = 4)]
-        [switch]$getAtomics = $True,
+        [switch]$getTests = $True,
 
         [Parameter(Mandatory = $False)]
         [switch]$Force = $False, # delete the existing install directory and reinstall
 
         [Parameter(Mandatory = $False)]
-        [switch]$NoPayloads = $False # only download atomic yaml files during -getAtomics operation (no /src or /bin dirs)
+        [switch]$NoPayloads = $False # only download yaml files during -getTests operation (no /src or /bin dirs)
     )
     Try {
         (New-Object System.Net.WebClient).Proxy.Credentials = [System.Net.CredentialCache]::DefaultNetworkCredentials
@@ -92,12 +92,12 @@ function Install-scanner {
             write-verbose "Importing invoke-scanner module"
             Import-Module $modulePath -Force
 
-            if ($getAtomics) {
-                Write-Verbose "Installing Atomics Folder"
+            if ($getTests) {
+                Write-Verbose "Installing Tests Folder"
                 Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/SVD-RGB/Scanner/main/install-atomicsfolder.ps1"); Install-AtomicsFolder -InstallPath $InstallPath 
             }
 
-            Write-Host "Installation of scanner is complete. You can now use the Invoke-AtomicTest function" -Fore Yellow
+            Write-Host "Installation of scanner is complete. You can now use the Invoke-scannerTest function" -Fore Yellow
         }
         else {
             Write-Host -ForegroundColor Yellow "scanner already exists at $InstallPathwIart. No changes were made."
