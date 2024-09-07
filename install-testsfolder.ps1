@@ -100,7 +100,7 @@ function Install-TestsFolder {
                 Where-Object {
                         ($_.FullName -like $Filter) `
                         -and (($_.FullName | split-path | split-path -Leaf) -eq [System.IO.Path]::GetFileNameWithoutExtension($_.Name)) `
-                        -and ($_.FullName | split-path | split-path | split-path -Leaf) -eq "atomics"
+                        -and ($_.FullName | split-path | split-path | split-path -Leaf) -eq "tests"
                 } |
                 ForEach-Object {
                     # extract the selected items from the ZIP archive
