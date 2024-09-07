@@ -28,7 +28,7 @@ function Install-TestsFolder {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $False, Position = 0)]
-        [string]$InstallPath = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/Scanner" } else { $env:HOMEDRIVE + "\Scanner" }),
+        [string]$InstallPath = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/tests" } else { $env:HOMEDRIVE + "\tests" }),
 
         [Parameter(Mandatory = $False, Position = 1)]
         [string]$DownloadPath = $InstallPath,
