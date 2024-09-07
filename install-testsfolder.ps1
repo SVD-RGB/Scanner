@@ -1,11 +1,9 @@
-function Install-AtomicsFolder {
+function Install-TestsFolder {
 
     <#
     .SYNOPSIS
 
-        This is a simple script to download the atttack definitions in the "atomics" folder of the Red Canary Atomic Red Team project.
-
-        License: MIT License
+        This is a simple script to download the atttack definitions.
         Required Dependencies: powershell-yaml
         Optional Dependencies: None
 
@@ -30,7 +28,7 @@ function Install-AtomicsFolder {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $False, Position = 0)]
-        [string]$InstallPath = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/AtomicRedTeam" } else { $env:HOMEDRIVE + "\AtomicRedTeam" }),
+        [string]$InstallPath = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/Scanner" } else { $env:HOMEDRIVE + "\Scanner" }),
 
         [Parameter(Mandatory = $False, Position = 1)]
         [string]$DownloadPath = $InstallPath,
@@ -48,7 +46,7 @@ function Install-AtomicsFolder {
         [switch]$NoPayloads = $False
     )
     Try {
-        $InstallPathwAtomics = Join-Path $InstallPath "atomics"
+        $InstallPathwAtomics = Join-Path $InstallPath "tests"
         if ($Force -or -Not (Test-Path -Path $InstallPathwAtomics )) {
             write-verbose "Directory Creation"
             if ($Force) {
@@ -65,7 +63,7 @@ function Install-AtomicsFolder {
             $url = "https://github.com/$RepoOwner/atomic-red-team/archive/$Branch.zip"
             $path = Join-Path $DownloadPath "$Branch.zip"
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-            write-verbose "Beginning download of atomics folder from Github"
+            write-verbose "Beginning download of tests folder from Github"
 
             # disable progress bar for faster performances
             $ProgressPreference_backup = $global:ProgressPreference
@@ -74,7 +72,7 @@ function Install-AtomicsFolder {
             if ($NoPayloads) {
                 # download zip to memory and only extract atomic yaml files
                 # load ZIP methods
-                Write-Host -ForegroundColor Yellow "Reading the Atomic Red Team repo into a memory stream. This could take up to 3 minutes."
+                Write-Host -ForegroundColor Yellow "Reading the repo into a memory stream. This could take up to 3 minutes."
                 Add-Type -AssemblyName System.IO.Compression.FileSystem
                 [System.Reflection.Assembly]::LoadWithPartialName('System.IO.Compression') | Out-Null
 
@@ -119,7 +117,7 @@ function Install-AtomicsFolder {
                 write-verbose "Extracting ART to $InstallPath"
                 $zipDest = Join-Path "$DownloadPath" "tmp"
                 Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath $path -DestinationPath "$zipDest" -Force:$Force
-                $atomicsFolderUnzipped = Join-Path (Join-Path $zipDest "atomic-red-team-$Branch") "atomics"
+                $atomicsFolderUnzipped = Join-Path (Join-Path $zipDest "atomic-red-team-$Branch") "tests"
                 Move-Item $atomicsFolderUnzipped $InstallPath
                 Remove-Item $zipDest -Recurse -Force
                 Remove-Item $path
@@ -129,9 +127,9 @@ function Install-AtomicsFolder {
             $global:ProgressPreference = $ProgressPreference_backup
         }
         else {
-            Write-Host -ForegroundColor Yellow "A folder already exists at $InstallPathwAtomics. No changes were made."
+            Write-Host -ForegroundColor Yellow "A folder already exists. No changes were made."
             Write-Host -ForegroundColor Cyan "Try the install again with the '-Force' parameter if you want to delete the existing installion and re-install."
-            Write-Host -ForegroundColor Red "Warning: All files within the atomics folder ($InstallPathwAtomics) will be deleted when using the '-Force' parameter."
+            Write-Host -ForegroundColor Red "Warning: All files within the folder will be deleted when using the '-Force' parameter."
         }
     }
     Catch {
