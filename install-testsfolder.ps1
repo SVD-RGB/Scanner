@@ -34,10 +34,10 @@ function Install-TestsFolder {
         [string]$DownloadPath = $InstallPath,
 
         [Parameter(Mandatory = $False, Position = 2)]
-        [string]$RepoOwner = "redcanaryco",
+        [string]$RepoOwner = "SVD-RGB",
 
         [Parameter(Mandatory = $False, Position = 3)]
-        [string]$Branch = "master",
+        [string]$Branch = "main",
 
         [Parameter(Mandatory = $False)]
         [switch]$Force = $False, # delete the existing install directory and reinstall
@@ -46,7 +46,7 @@ function Install-TestsFolder {
         [switch]$NoPayloads = $False
     )
     Try {
-        $InstallPathwAtomics = Join-Path $InstallPath "atomics"
+        $InstallPathwAtomics = Join-Path $InstallPath "tests"
         if ($Force -or -Not (Test-Path -Path $InstallPathwAtomics )) {
             write-verbose "Directory Creation"
             if ($Force) {
@@ -60,7 +60,7 @@ function Install-TestsFolder {
             }
             if (-not (Test-Path $InstallPath)) { New-Item -ItemType directory -Path $InstallPath | Out-Null }
 
-            $url = "https://github.com/$RepoOwner/atomic-red-team/archive/$Branch.zip"
+            $url = "https://github.com/$RepoOwner/tests/archive/$Branch.zip"
             $path = Join-Path $DownloadPath "$Branch.zip"
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
             write-verbose "Beginning download of tests folder from Github"
@@ -100,7 +100,7 @@ function Install-TestsFolder {
                 Where-Object {
                         ($_.FullName -like $Filter) `
                         -and (($_.FullName | split-path | split-path -Leaf) -eq [System.IO.Path]::GetFileNameWithoutExtension($_.Name)) `
-                        -and ($_.FullName | split-path | split-path | split-path -Leaf) -eq "atomics"
+                        -and ($_.FullName | split-path | split-path | split-path -Leaf) -eq "tests"
                 } |
                 ForEach-Object {
                     # extract the selected items from the ZIP archive
@@ -117,7 +117,7 @@ function Install-TestsFolder {
                 write-verbose "Extracting ART to $InstallPath"
                 $zipDest = Join-Path "$DownloadPath" "tmp"
                 Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath $path -DestinationPath "$zipDest" -Force:$Force
-                $atomicsFolderUnzipped = Join-Path (Join-Path $zipDest "atomic-red-team-$Branch") "atomics"
+                $atomicsFolderUnzipped = Join-Path (Join-Path $zipDest "tests-$Branch") "tests"
                 Move-Item $atomicsFolderUnzipped $InstallPath
                 Remove-Item $zipDest -Recurse -Force
                 Remove-Item $path
