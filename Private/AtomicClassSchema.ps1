@@ -30,7 +30,7 @@ class AtomicExecutorManual : AtomicExecutorBase {
     [String] $cleanup_command
 }
 
-class AtomicTest {
+class Test {
     [String] $name
     [String] $auto_generated_guid
     [String] $description
@@ -51,5 +51,5 @@ class AtomicTest {
 class AtomicTechnique {
     [String[]] $attack_technique
     [String] $display_name
-    [AtomicTest[]] $atomic_tests
+    [Test[]] $atomic_tests
 }
