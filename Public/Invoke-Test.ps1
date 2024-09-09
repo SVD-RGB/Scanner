@@ -48,7 +48,7 @@ function Invoke-Test {
         [Parameter(Mandatory = $false,
             ParameterSetName = 'technique')]
         [String]
-        $PathToAtomicsFolder = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/tests" } else { $env:HOMEDRIVE + "\tests" }),
+        $PathTotestsFolder = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/tests" } else { $env:HOMEDRIVE + "\tests" }),
 
         [Parameter(Mandatory = $false,
             ValueFromPipelineByPropertyName = $true,
@@ -122,7 +122,7 @@ function Invoke-Test {
         [Parameter(Mandatory = $false,
             ParameterSetName = 'technique')]
         [switch]
-        $SupressPathToAtomicsFolder = $false
+        $SupressPathTotestsFolder = $false
 
     )
     BEGIN { } # Intentionally left blank and can be removed
@@ -136,13 +136,13 @@ function Invoke-Test {
             return $Loggers -split ',' | ForEach-Object { $_.Trim() }
         }
 
-        $PathToAtomicsFolder = (Resolve-Path $PathToAtomicsFolder).Path
+        $PathTotestsFolder = (Resolve-Path $PathTotestsFolder).Path
 
-        Write-Verbose -Message 'Attempting to run Atomic Techniques'
-        if (-not $supressPathToAtomicsFolder) { Write-Host -ForegroundColor Cyan "PathToAtomicsFolder = $PathToAtomicsFolder`n" }
+        Write-Verbose -Message 'Attempting to run Techniques'
+        if (-not $supressPathTotestsFolder) { Write-Host -ForegroundColor Cyan "PathTotestsFolder = $PathTotestsFolder`n" }
 
         $executionPlatform, $isElevated, $tmpDir, $executionHostname, $executionUser = Get-TargetInfo $Session
-        $PathToPayloads = if ($Session) { "$tmpDir`AtomicRedTeam" }  else { $PathToAtomicsFolder }
+        $PathToPayloads = if ($Session) { "$tmpDir`AtomicRedTeam" }  else { $PathTotestsFolder }
 
         # Since there might a comma(T1559-1,2,3) Powershell takes it as array.
         # So converting it back to string.
@@ -245,7 +245,7 @@ function Invoke-Test {
                 $commandLine = "$commandLine -TestGuids $TestGuids"
             }
 
-            $commandLine = "$commandLine -PathToAtomicsFolder $PathToAtomicsFolder"
+            $commandLine = "$commandLine -PathTotestsFolder $PathTotestsFolder"
 
             if ($CheckPrereqs -ne $false) {
                 $commandLine = "$commandLine -CheckPrereqs $CheckPrereqs"
@@ -318,7 +318,7 @@ function Invoke-Test {
 
         function Test-IncludesTerraform($AT, $testCount) {
             $AT = $AT.ToUpper()
-            $pathToTerraform = Join-Path $PathToAtomicsFolder "\$AT\src\$AT-$testCount\$AT-$testCount.tf"
+            $pathToTerraform = Join-Path $PathTotestsFolder "\$AT\src\$AT-$testCount\$AT-$testCount.tf"
             $cloud = ('iaas', 'containers', 'iaas:aws', 'iaas:azure', 'iaas:gcp')
             foreach ($platform in $test.supported_platforms) {
                 if ($cloud -contains $platform) {
@@ -329,7 +329,7 @@ function Invoke-Test {
         }
 
         function Build-TFVars($AT, $testCount, $InputArgs) {
-            $tmpDirPath = Join-Path $PathToAtomicsFolder "\$AT\src\$AT-$testCount"
+            $tmpDirPath = Join-Path $PathTotestsFolder "\$AT\src\$AT-$testCount"
             if ($InputArgs) {
                 $destinationVarsPath = Join-Path "$tmpDirPath" "terraform.tfvars.json"
                 $InputArgs | ConvertTo-Json | Out-File -FilePath $destinationVarsPath
@@ -337,7 +337,7 @@ function Invoke-Test {
         }
 
         function Remove-TerraformFiles($AT, $testCount) {
-            $tmpDirPath = Join-Path $PathToAtomicsFolder "\$AT\src\$AT-$testCount"
+            $tmpDirPath = Join-Path $PathTotestsFolder "\$AT\src\$AT-$testCount"
             Write-Host $tmpDirPath
             $tfStateFile = Join-Path $tmpDirPath "terraform.tfstate"
             $tfvarsFile = Join-Path $tmpDirPath "terraform.tfvars.json"
@@ -352,7 +352,7 @@ function Invoke-Test {
         function Invoke-AtomicTestSingle ($AT) {
 
             $AT = $AT.ToUpper()
-            $pathToYaml = Join-Path $PathToAtomicsFolder "\$AT\$AT.yaml"
+            $pathToYaml = Join-Path $PathTotestsFolder "\$AT\$AT.yaml"
             if (Test-Path -Path $pathToYaml) { $AtomicTechniqueHash = Get-AtomicTechnique -Path $pathToYaml }
             else {
                 Write-Host -Fore Red "ERROR: $PathToYaml does not exist`nCheck your Number and your PathTotestsFolder parameter"
