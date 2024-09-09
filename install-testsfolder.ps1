@@ -37,7 +37,7 @@ function Install-TestsFolder {
         [string]$RepoOwner = "SVD-RGB",
 
         [Parameter(Mandatory = $False, Position = 3)]
-        [string]$Branch = "master",
+        [string]$Branch = "main",
 
         [Parameter(Mandatory = $False)]
         [switch]$Force = $False, # delete the existing install directory and reinstall
@@ -60,7 +60,7 @@ function Install-TestsFolder {
             }
             if (-not (Test-Path $InstallPath)) { New-Item -ItemType directory -Path $InstallPath | Out-Null }
 
-            $url = "https://github.com/SVD-RGB/tests/archive/master.zip"
+            $url = "https://github.com/SVD-RGB/tests/archive/main.zip"
             $path = Join-Path $DownloadPath "$Branch.zip"
             [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
             write-verbose "Beginning download of tests folder from Github"
