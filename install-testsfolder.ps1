@@ -9,15 +9,15 @@ function Install-TestsFolder {
 
     .PARAMETER DownloadPath
 
-        Specifies the desired path to download atomics zip archive to.
+        Specifies the desired path to download zip archive to.
 
     .PARAMETER InstallPath
 
-        Specifies the desired path for where to unzip the atomics folder.
+        Specifies the desired path for where to unzip the folder.
 
     .PARAMETER Force
 
-        Delete the existing atomics folder before installation if it exists.
+        Delete the existing folder before installation if it exists.
 
 
     .NOTES
@@ -46,12 +46,12 @@ function Install-TestsFolder {
         [switch]$NoPayloads = $False
     )
     Try {
-        $InstallPathwAtomics = Join-Path $InstallPath "tests"
-        if ($Force -or -Not (Test-Path -Path $InstallPathwAtomics )) {
+        $InstallPathwtests = Join-Path $InstallPath "tests"
+        if ($Force -or -Not (Test-Path -Path $InstallPathwtests )) {
             write-verbose "Directory Creation"
             if ($Force) {
                 Try {
-                    if ((Test-Path $InstallPathwAtomics) -and (-not $NoPayloads)) { Remove-Item -Path $InstallPathwAtomics -Recurse -Force -ErrorAction Stop | Out-Null }
+                    if ((Test-Path $InstallPathwtests) -and (-not $NoPayloads)) { Remove-Item -Path $InstallPathwtests -Recurse -Force -ErrorAction Stop | Out-Null }
                 }
                 Catch {
                     Write-Host -ForegroundColor Red $_.Exception.Message
@@ -70,7 +70,7 @@ function Install-TestsFolder {
             $global:ProgressPreference = "SilentlyContinue"
 
             if ($NoPayloads) {
-                # download zip to memory and only extract atomic yaml files
+                # download zip to memory and only extract yaml files
                 # load ZIP methods
                 Write-Host -ForegroundColor Yellow "Reading the repo into a memory stream. This could take up to 3 minutes."
                 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -90,9 +90,9 @@ function Install-TestsFolder {
                 $Filter = '*.yaml'
 
                 # ensure the output folder exists
-                $exists = Test-Path -Path $InstallPathwAtomics
+                $exists = Test-Path -Path $InstallPathwtests
                 if ($exists -eq $false) {
-                    $null = New-Item -Path $InstallPathwAtomics -ItemType Directory -Force
+                    $null = New-Item -Path $InstallPathwtests -ItemType Directory -Force
                 }
 
                 # find all files in ZIP that match the filter (i.e. file extension)
@@ -105,7 +105,7 @@ function Install-TestsFolder {
                 ForEach-Object {
                     # extract the selected items from the ZIP archive
                     # and copy them to the out folder
-                    $dstDir = Join-Path $InstallPathwAtomics ($_.FullName | split-path | split-path -Leaf)
+                    $dstDir = Join-Path $InstallPathwtests ($_.FullName | split-path | split-path -Leaf)
                     New-Item -ItemType Directory -Force -Path $dstDir | Out-Null
                     [System.IO.Compression.ZipFileExtensions]::ExtractToFile($_, (Join-Path $dstDir $_.Name), $true)
                 }
@@ -117,8 +117,8 @@ function Install-TestsFolder {
                 write-verbose "Extracting ART to $InstallPath"
                 $zipDest = Join-Path "$DownloadPath" "tmp"
                 Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath $path -DestinationPath "$zipDest" -Force:$Force
-                $atomicsFolderUnzipped = Join-Path (Join-Path $zipDest "tests-$Branch") "tests"
-                Move-Item $atomicsFolderUnzipped $InstallPath
+                $testsFolderUnzipped = Join-Path (Join-Path $zipDest "tests-$Branch") "tests"
+                Move-Item $testsFolderUnzipped $InstallPath
                 Remove-Item $zipDest -Recurse -Force
                 Remove-Item $path
             }
