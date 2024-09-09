@@ -48,7 +48,7 @@ function Invoke-Test {
         [Parameter(Mandatory = $false,
             ParameterSetName = 'technique')]
         [String]
-        $PathTotestsFolder = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/tests" } else { $env:HOMEDRIVE + "\tests" }),
+        $PathToAtomicsFolder = $( if ($IsLinux -or $IsMacOS) { $Env:HOME + "/tests" } else { $env:HOMEDRIVE + "\tests" }),
 
         [Parameter(Mandatory = $false,
             ValueFromPipelineByPropertyName = $true,
