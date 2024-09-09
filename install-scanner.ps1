@@ -41,7 +41,7 @@ function Install-scanner {
         [string]$RepoOwner = "SVD-RGB",
 
         [Parameter(Mandatory = $False, Position = 3)]
-        [string]$Branch = "main",
+        [string]$Branch = "master",
 
         [Parameter(Mandatory = $False, Position = 4)]
         [switch]$getTests = $True,
@@ -94,7 +94,7 @@ function Install-scanner {
 
             if ($getTests) {
                 Write-Verbose "Installing Tests Folder"
-                Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/SVD-RGB/Scanner/main/install-testsfolder.ps1"); Install-TestsFolder -InstallPath $InstallPath 
+                Invoke-Expression (New-Object Net.WebClient).DownloadString("https://raw.githubusercontent.com/SVD-RGB/Scanner/master/install-testsfolder.ps1"); Install-TestsFolder -InstallPath $InstallPath 
             }
 
             Write-Host "Installation of scanner is complete. You can now use the Invoke-scannerTest function" -Fore Yellow
