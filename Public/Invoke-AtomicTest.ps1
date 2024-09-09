@@ -355,7 +355,7 @@ function Invoke-AtomicTest {
             $pathToYaml = Join-Path $PathToAtomicsFolder "\$AT\$AT.yaml"
             if (Test-Path -Path $pathToYaml) { $AtomicTechniqueHash = Get-AtomicTechnique -Path $pathToYaml }
             else {
-                Write-Host -Fore Red "ERROR: $PathToYaml does not exist`nCheck your Atomic Number and your PathToAtomicsFolder parameter"
+                Write-Host -Fore Red "ERROR: $PathToYaml does not exist`nCheck your Number and your PathTotestsFolder parameter"
                 return
             }
             $techniqueCount = 0
@@ -411,7 +411,7 @@ function Invoke-AtomicTest {
                     }
 
                     $props = @{
-                        Activity        = 'Running Atomic Tests'
+                        Activity        = 'Running Tests'
                         Status          = 'Progress:'
                         PercentComplete = ($testCount / ($technique.atomic_tests).Count * 100)
                     }
@@ -440,7 +440,7 @@ function Invoke-AtomicTest {
                         continue
                     }
 
-                    Write-Debug -Message 'Gathering final Atomic test command'
+                    Write-Debug -Message 'Gathering final test command'
 
 
                     if ($CheckPrereqs) {
@@ -509,8 +509,8 @@ function Invoke-AtomicTest {
                         Write-KeyValue "Done executing test: " $testId
                     }
 
-                } # End of foreach Test in single Atomic Technique
-            } # End of foreach Technique in Atomic Tests
+                } # End of foreach Test in single Technique
+            } # End of foreach Technique in Tests
             if ($numAtomicsApplicableToPlatform -eq 0) {
                 Write-Host -ForegroundColor Yellow "Found $numAtomicsApplicableToPlatform atomic tests applicable to $executionPlatform platform for Technique $techniqueString"
             }
@@ -527,7 +527,7 @@ function Invoke-AtomicTest {
             }
 
             if ( ($Force -or $CheckPrereqs -or $ShowDetails -or $ShowDetailsBrief -or $GetPrereqs) -or $psCmdlet.ShouldContinue( 'Do you wish to execute all tests?',
-                    "Highway to the danger zone, Executing All Atomic Tests!" ) ) {
+                    "Highway to the danger zone, Executing All Tests!" ) ) {
                 Invoke-AllTests
             }
         }
