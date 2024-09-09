@@ -142,7 +142,7 @@ function Invoke-Test {
         if (-not $supressPathTotestsFolder) { Write-Host -ForegroundColor Cyan "PathTotestsFolder = $PathTotestsFolder`n" }
 
         $executionPlatform, $isElevated, $tmpDir, $executionHostname, $executionUser = Get-TargetInfo $Session
-        $PathToPayloads = if ($Session) { "$tmpDir`AtomicRedTeam" }  else { $PathTotestsFolder }
+        $PathToPayloads = if ($Session) { "$tmpDir`Scanner" }  else { $PathTotestsFolder }
 
         # Since there might a comma(T1559-1,2,3) Powershell takes it as array.
         # So converting it back to string.
