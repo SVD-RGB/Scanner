@@ -1,4 +1,4 @@
-function Invoke-AtomicTest {
+function Invoke-Test {
     [CmdletBinding(DefaultParameterSetName = 'technique',
         SupportsShouldProcess = $true,
         PositionalBinding = $false,
@@ -223,7 +223,7 @@ function Invoke-AtomicTest {
             }
 
             # Here we're rebuilding an equivalent command line to put in the logs
-            $commandLine = "Invoke-AtomicTest $AtomicTechnique"
+            $commandLine = "Invoke-Test $AtomicTechnique"
 
             if ($ShowDetails -ne $false) {
                 $commandLine = "$commandLine -ShowDetails $ShowDetails"
