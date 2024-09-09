@@ -51,5 +51,5 @@ class Test {
 class AtomicTechnique {
     [String[]] $attack_technique
     [String] $display_name
-    [Test[]] $atomic_tests
+    [Test[]] $tests
 }
