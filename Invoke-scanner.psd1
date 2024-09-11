@@ -30,8 +30,6 @@
         'New-AtomicTest',
         'New-AtomicTestInputArgument',
         'New-AtomicTestDependency',
-        'Start-AtomicGUI',
-        'Stop-AtomicGUI',
         'Invoke-SetupAtomicRunner',
         'Invoke-GenerateNewSchedule',
         'Invoke-RefreshExistingSchedule',
