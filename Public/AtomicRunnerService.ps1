@@ -5,30 +5,6 @@
 #                                                                             #
 #   Description     A sample service in a standalone PowerShell script        #
 #                                                                             #
-#   Notes           The latest PSService.ps1 version is available in GitHub   #
-#                   repository https://github.com/JFLarvoire/SysToolsLib/ ,   #
-#                   in the PowerShell subdirectory.                           #
-#                   Please report any problem in the Issues tab in that       #
-#                   GitHub repository in                                      #
-#                   https://github.com/JFLarvoire/SysToolsLib/issues          #
-#                   If you do submit a pull request, please add a comment at  #
-#                   the end of this header with the date, your initials, and  #
-#                   a description of the changes. Also update $scriptVersion. #
-#                                                                             #
-#                   The initial version of this script was described in an    #
-#                   article published in the May 2016 issue of MSDN Magazine. #
-#                   https://msdn.microsoft.com/en-us/magazine/mt703436.aspx   #
-#                   This updated version has one major change:                #
-#                   The -Service handler in the end has been rewritten to be  #
-#                   event-driven, with a second thread waiting for control    #
-#                   messages coming in via a named pipe.                      #
-#                   This allows fixing a bug of the original version, that    #
-#                   did not stop properly, and left a zombie process behind.  #
-#                   The drawback is that the new code is significantly longer,#
-#                   due to the added PowerShell thread management routines.   #
-#                   On the other hand, these thread management routines are   #
-#                   reusable, and will allow building much more powerful      #
-#                   services.                                                 #
 #                                                                             #
 #                   Dynamically generates a small PSService.exe wrapper       #
 #                   application, that in turn invokes this PowerShell script. #
@@ -309,7 +285,7 @@ if ($Version) {
 #                   improve the readability.                                  #
 #                                                                             #
 #   History                                                                   #
-#    2015-06-11 JFL Created this routine.                                     #
+#                                                                             #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
@@ -380,14 +356,6 @@ Function Log () {
 #   Notes           Returns a thread description object.                      #
 #                   The completion can be tested in $_.Handle.IsCompleted     #
 #                   Alternative: Use a thread completion event.               #
-#                                                                             #
-#   References                                                                #
-#    https://learn-powershell.net/tag/runspace/                               #
-#    https://learn-powershell.net/2013/04/19/sharing-variables-and-live-objects-between-powershell-runspaces/
-#    http://www.codeproject.com/Tips/895840/Multi-Threaded-PowerShell-Cookbook
-#                                                                             #
-#   History                                                                   #
-#    2016-06-08 JFL Created this function                                     #
 #                                                                             #
 #-----------------------------------------------------------------------------#
 
